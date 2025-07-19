@@ -1,0 +1,39 @@
+BROKER_BINARY=broker-service
+
+go_build:
+	@echo "Building broker binary..."
+	@GOOS=linux GOARCH=amd64 go build -o ./bin/api/${BROKER_BINARY} ./cmd/api
+	@echo "Done!"
+
+clean_build:
+	@echo "Removing binaries..."
+	@rm -f ./bin/api/${BROKER_BINARY}
+	@echo "Done!"
+
+go_run: go_build
+	@echo "Building broker binary..."
+	@export CONFIG_PATH=$(CONFIG_PATH) && ./bin/api/${BROKER_BINARY} &
+	@echo "Done!"
+
+go_stop:
+	@echo "Stopping broker..."
+	@-pkill -SIGTERM -f "./bin/api/${BROKER_BINARY}"
+	@echo "Stopped broker!"
+
+build_image:
+	@echo "Building image..."
+	@docker build --no-cache -f build/docker/Dockerfile -t broker-service .
+	@echo "Done!"
+
+run:
+	@echo "Running container..."
+	@docker run --rm -d --name=broker-service \
+	-v ./config:/usr/local/bin/config \
+	-e CONFIG_PATH=/usr/local/bin/config/local.yaml \
+	-p4000:4000 broker-service
+	@echo "Done!"
+
+stop:
+	@echo "Stopping container..."
+	@docker stop broker-service
+	@echo "Done!"
