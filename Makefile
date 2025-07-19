@@ -1,7 +1,7 @@
 BROKER_BINARY=broker-service
 
 go_build:
-	@echo "Building broker binary..."
+	@echo "Building ${BROKER_BINARY} binary..."
 	@GOOS=linux GOARCH=amd64 go build -o ./bin/api/${BROKER_BINARY} ./cmd/api
 	@echo "Done!"
 
@@ -11,14 +11,14 @@ clean_build:
 	@echo "Done!"
 
 go_run: go_build
-	@echo "Building broker binary..."
+	@echo "Building ${BROKER_BINARY} binary..."
 	@export CONFIG_PATH=$(CONFIG_PATH) && ./bin/api/${BROKER_BINARY} &
 	@echo "Done!"
 
 go_stop:
-	@echo "Stopping broker..."
+	@echo "Stopping ${BROKER_BINARY}..."
 	@-pkill -SIGTERM -f "./bin/api/${BROKER_BINARY}"
-	@echo "Stopped broker!"
+	@echo "Stopped ${BROKER_BINARY}!"
 
 build_image:
 	@echo "Building image..."
