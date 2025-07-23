@@ -11,7 +11,7 @@ clean_build:
 	@echo "Done!"
 
 go_run: go_build
-	@echo "Building ${BROKER_BINARY} binary..."
+	@echo "Running ${BROKER_BINARY} binary..."
 	@export CONFIG_PATH=$(CONFIG_PATH) && ./bin/api/${BROKER_BINARY} &
 	@echo "Done!"
 
