@@ -22,18 +22,18 @@ go_stop:
 
 build_image:
 	@echo "Building image..."
-	@docker build --no-cache -f build/docker/Dockerfile -t broker-service .
+	@docker build --no-cache -f build/docker/Dockerfile -t ${BROKER_BINARY} .
 	@echo "Done!"
 
 run:
 	@echo "Running container..."
-	@docker run --rm -d --name=broker-service \
+	@docker run --rm -d --name=${BROKER_BINARY} \
 	-v ./config:/usr/local/bin/config \
 	-e CONFIG_PATH=/usr/local/bin/config/local.yaml \
-	-p4000:4000 broker-service
+	-p4000:4000 ${BROKER_BINARY}
 	@echo "Done!"
 
 stop:
 	@echo "Stopping container..."
-	@docker stop broker-service
+	@docker stop ${BROKER_BINARY}
 	@echo "Done!"
