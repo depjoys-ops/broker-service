@@ -29,7 +29,7 @@ run:
 	@echo "Running container..."
 	@docker run --rm -d --name=${BROKER_BINARY} \
 	-v ./config:/usr/local/bin/config \
-	-e CONFIG_PATH=/usr/local/bin/config/local.yaml \
+	-e CONFIG_PATH=/usr/local/bin/config/config.yaml \
 	-p4000:4000 ${BROKER_BINARY}
 	@echo "Done!"
 
