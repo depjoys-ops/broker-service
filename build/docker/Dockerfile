@@ -3,10 +3,10 @@ WORKDIR /app
 COPY go.* ./
 RUN go mod download
 COPY . ./
-RUN GOOS=linux GOARCH=amd64 go build -o ./bin/api/broker-service ./cmd/api
+RUN GOOS=linux GOARCH=amd64 go build -o ./bin/app/broker-service ./cmd/app
 
 FROM alpine:3.22 AS app
 RUN apk --no-cache upgrade && apk --no-cache add ca-certificates
-COPY --from=builder /app/bin/api/broker-service /usr/local/bin/
+COPY --from=builder /app/bin/app/broker-service /usr/local/bin/
 WORKDIR /usr/local/bin/
 CMD ["./broker-service"]
