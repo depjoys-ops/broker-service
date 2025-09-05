@@ -22,7 +22,9 @@ func NewRouter() http.Handler {
 
 	mux.Use(middleware.Heartbeat("/ping"))
 
-	mux.Post("/", broker)
+	mux.Post("/", handleBroker)
+
+	mux.Post("/handle", handleAction)
 
 	return mux
 }
