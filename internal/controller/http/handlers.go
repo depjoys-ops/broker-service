@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 )
 
@@ -36,9 +37,12 @@ func handleAction(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Println(requestPayload)
+
 	switch requestPayload.Action {
 	case "auth":
 		authenticate(w, requestPayload.Auth)
+		log.Println(requestPayload.Auth)
 	default:
 		errorJSON(w, errors.New("unknown action"))
 	}
